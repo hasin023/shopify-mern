@@ -1,7 +1,13 @@
-import { useState } from "react";
 import { AiOutlineHome, AiOutlineShopping, AiOutlineLogin, AiOutlineLogout, AiOutlineUserAdd, AiOutlineShoppingCart, } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { FaRegHeart } from "react-icons/fa";
+import { MdOutlineSpaceDashboard } from "react-icons/md";
+import { CiViewList } from "react-icons/ci";
+import { BiCategory } from "react-icons/bi";
+import { GrCart } from "react-icons/gr";
+import { FiUsers } from "react-icons/fi";
+
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./Navigation.css";
@@ -84,8 +90,59 @@ const Navigation = () => {
 
             <div className="relative">
 
+                {userInfo && userInfo.isAdmin && (
+                    <ul className="mr-2">
+                        <li>
+                            <Link
+                                to="/admin/dashboard"
+                                className="flex items-center mt-5 transition-transform transform hover:translate-x-2"
+                            >
+                                <MdOutlineSpaceDashboard className="mr-2 mt-[4px]" size={26} />
+                                <span className="hidden nav-item-name">Dashboard</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                to="/admin/productlist"
+                                className="flex items-center mt-5 transition-transform transform hover:translate-x-2"
+                            >
+                                <CiViewList size={26} />
+                                <span className="hidden ml-2 nav-item-name">Products</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                to="/admin/categorylist"
+                                className="flex items-center mt-5 transition-transform transform hover:translate-x-2"
+                            >
+                                <BiCategory size={26} />
+                                <span className="hidden ml-2 nav-item-name">Category</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                to="/admin/orderlist"
+                                className="flex items-center mt-5 transition-transform transform hover:translate-x-2"
+                            >
+                                <GrCart size={26} />
+                                <span className="hidden ml-2 nav-item-name">Orders</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                to="/admin/userlist"
+                                className="flex items-center mt-5 transition-transform transform hover:translate-x-2"
+                            >
+                                <FiUsers size={26} />
+                                <span className="hidden ml-2 nav-item-name">Users</span>
+                            </Link>
+                        </li>
+                    </ul>
+                )}
+
+
                 {userInfo ? (
-                    <ul>
+                    <ul className="mt-4">
                         <li>
                             <Link
                                 to="/profile"
@@ -111,58 +168,6 @@ const Navigation = () => {
                 )}
 
 
-                {userInfo && (
-                    <ul
-                        className={`absolute right-0 mt-2 mr-14 space-y-2 bg-white text-gray-600 ${!userInfo.isAdmin ? "-top-20" : "-top-80"
-                            } `}
-                    >
-                        {userInfo.isAdmin && (
-                            <>
-                                <li>
-                                    <Link
-                                        to="/admin/dashboard"
-                                        className="block px-4 py-2 hover:bg-gray-100"
-                                    >
-                                        Dashboard
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        to="/admin/productlist"
-                                        className="block px-4 py-2 hover:bg-gray-100"
-                                    >
-                                        Products
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        to="/admin/categorylist"
-                                        className="block px-4 py-2 hover:bg-gray-100"
-                                    >
-                                        Category
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        to="/admin/orderlist"
-                                        className="block px-4 py-2 hover:bg-gray-100"
-                                    >
-                                        Orders
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        to="/admin/userlist"
-                                        className="block px-4 py-2 hover:bg-gray-100"
-                                    >
-                                        Users
-                                    </Link>
-                                </li>
-                            </>
-                        )}
-
-                    </ul>
-                )}
                 {!userInfo && (
                     <ul>
                         <li>

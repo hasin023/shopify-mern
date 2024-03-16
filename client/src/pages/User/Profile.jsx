@@ -8,7 +8,6 @@ import { setCredentials } from "../../redux/features/auth/authSlice";
 
 import Field from "../formElements/Field";
 import Fieldset from "../formElements/Fieldset";
-import User from "../../../../server/models/userModel";
 
 const Profile = () => {
 
@@ -45,7 +44,8 @@ const Profile = () => {
     }
 
     return (
-        <div className="flex justify-center items-center h-lvh">
+
+        <div className="flex justify-center items-center h-lvh" >
             <div className="border-t-8 rounded-sm border-indigo-400 bg-white p-12 shadow-2xl w-full max-w-4xl">
                 <h1 className="font-bold text-2xl">Update your details</h1>
                 <form onSubmit={handleSubmit(formSubmit)} className="flex flex-wrap -mx-4 mb-6">
@@ -112,7 +112,7 @@ const Profile = () => {
                 </form>
                 <NavLink className="text-gray-900 block" to="/user-orders">Review your Orders. <span className="underline text-blue-400">My Orders</span></NavLink>
             </div>
-        </div>
+        </div >
     );
 }
 
