@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router-dom";
 
-import Field from "./formElements/Field";
-import Fieldset from "./formElements/Fieldset";
+import Field from "../formElements/Field";
+import Fieldset from "../formElements/Fieldset";
 
 const Reset = () => {
     const navigate = useNavigate();
@@ -27,7 +27,7 @@ const Reset = () => {
                     <Fieldset>
                         <Field label="Email" error={errors.email}>
                             <input {...register("email", { required: "Email is required" })}
-                                className={`p-2 border box-border w-[300px] rounded-md ${errors.email ? "border-red-500" : "border-gray-400"}`}
+                                className={`focus:outline-yellow-400 invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 p-2 border box-border w-[300px] rounded-md ${errors.email ? "border-red-500" : "border-gray-400"}`}
                                 type="email" name="email" id="email" placeholder="example@email.com" />
                         </Field>
                     </Fieldset>

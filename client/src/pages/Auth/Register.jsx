@@ -7,8 +7,8 @@ import { useRegisterUserMutation } from "../../redux/api/usersApiSlice";
 import { setCredentials } from "../../redux/features/auth/authSlice";
 
 
-import Field from "./formElements/Field";
-import Fieldset from "./formElements/Fieldset";
+import Field from "../formElements/Field";
+import Fieldset from "../formElements/Fieldset";
 
 const Register = () => {
 
@@ -61,13 +61,13 @@ const Register = () => {
 
                         <Field label="Username" error={errors.username}>
                             <input {...register("username", { required: "Username is required" })}
-                                className={`p-2 border box-border w-[300px] rounded-md ${errors.username ? "border-red-500" : "border-gray-400"}`}
+                                className={`focus:outline-indigo-400 p-2 border box-border w-[300px] rounded-md ${errors.username ? "border-red-500" : "border-gray-400"}`}
                                 type="text" name="username" id="username" placeholder="Example Name" />
                         </Field>
 
                         <Field label="Email" error={errors.email}>
                             <input {...register("email", { required: "Email is required" })}
-                                className={`p-2 border box-border w-[300px] rounded-md ${errors.email ? "border-red-500" : "border-gray-400"}`}
+                                className={`focus:outline-indigo-400 invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 p-2 border box-border w-[300px] rounded-md ${errors.email ? "border-red-500" : "border-gray-400"}`}
                                 type="email" name="email" id="email" placeholder="example@email.com" />
                         </Field>
 
@@ -76,13 +76,13 @@ const Register = () => {
                                 required: "Password is required",
                                 minLength: { value: 6, message: "Password must be at least 6 characters" },
                             })}
-                                className={`p-2 border box-border w-[300px] rounded-md ${errors.password ? "border-red-500" : "border-gray-400"}`}
+                                className={`focus:outline-indigo-400 p-2 border box-border w-[300px] rounded-md ${errors.password ? "border-red-500" : "border-gray-400"}`}
                                 type="password" name="password" id="password" placeholder="Enter Password" />
                         </Field>
 
                         <Field label="Confirm Password" error={errors.confirmPassword}>
                             <input {...register("confirmPassword")}
-                                className={`p-2 border box-border w-[300px] rounded-md ${errors.confirmPassword ? "border-red-500" : "border-gray-400"}`}
+                                className={`focus:outline-indigo-400 p-2 border box-border w-[300px] rounded-md ${errors.confirmPassword ? "border-red-500" : "border-gray-400"}`}
                                 type="password" name="confirmPassword" id="confirmPassword" placeholder="Re-enter Password" />
                         </Field>
 
