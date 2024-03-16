@@ -1,29 +1,53 @@
-import { useFieldArray, useForm } from "react-hook-form";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import Loader from "../../components/Loader";
+import { useRegisterUserMutation } from "../../redux/api/usersApiSlice";
+import { setCredentials } from "../../redux/features/auth/authSlice";
+
 
 import Field from "./formElements/Field";
 import Fieldset from "./formElements/Fieldset";
 
 const Register = () => {
+
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors }, control } = useForm();
-    const { fields, append, remove } = useFieldArray({
-        name: "socials",
-        control,
-    });
+
+    const { register, handleSubmit, formState: { errors }, setError } = useForm();
+
+    const [registerUser, { isLoading }] = useRegisterUserMutation();
+    const { userInfo } = useSelector((state) => state.auth);
+
+    const { search } = useLocation();
+    const sp = new URLSearchParams(search);
+    const redirect = sp.get("redirect") || "/";
+
+    useEffect(() => {
+        if (userInfo) {
+            navigate(redirect);
+        }
+    }, [navigate, redirect, userInfo]);
 
     const formSubmit = async (formData) => {
-        console.log(formData);
-        const { email, password } = formData;
+        // console.log(formData);
+        const { username, email, password, confirmPassword } = formData;
 
-        try {
-            const user = await registerUserWithEmailAndPassword(email, password);
-            console.log(user);
-            console.log("User registered successfully");
-            navigate("/login");
+        console.log(password === confirmPassword);
 
-        } catch (error) {
-            console.error(error);
+        if (password !== confirmPassword) {
+            setError("confirmPassword", { message: "Passwords do not match" });
+        } else {
+
+            try {
+                const res = await registerUser({ username, email, password }).unwrap();
+                dispatch(setCredentials({ ...res }));
+                navigate(redirect);
+                console.log("User successfully registered");
+            } catch (error) {
+                console.error(error);
+            }
         }
     }
 
@@ -34,17 +58,18 @@ const Register = () => {
                 <form onSubmit={handleSubmit(formSubmit)} className="mb-4">
                     {/* User Details */}
                     <Fieldset label="Enter personal details">
+
+                        <Field label="Username" error={errors.username}>
+                            <input {...register("username", { required: "Full Name is required" })}
+                                className={`p-2 border box-border w-[300px] rounded-md ${errors.username ? "border-red-500" : "border-gray-400"}`}
+                                type="text" name="username" id="username" placeholder="Example Name" />
+                        </Field>
+
                         <Field label="Email" error={errors.email}>
                             <input {...register("email", { required: "Email is required" })}
                                 className={`p-2 border box-border w-[300px] rounded-md ${errors.email ? "border-red-500" : "border-gray-400"}`}
                                 type="email" name="email" id="email" placeholder="example@email.com" />
                         </Field>
-
-                        {/* <Field label="Full Name" error={errors.fName}>
-                            <input {...register("fName", { required: "Full Name is required" })}
-                                className={`p-2 border box-border w-[300px] rounded-md ${errors.fName ? "border-red-500" : "border-gray-400"}`}
-                                type="text" name="fName" id="fName" placeholder="Example Name" />
-                        </Field> */}
 
                         <Field label="Password" error={errors.password}>
                             <input {...register("password", {
@@ -55,44 +80,27 @@ const Register = () => {
                                 type="password" name="password" id="password" placeholder="Enter Password" />
                         </Field>
 
+                        <Field label="Confirm Password" error={errors.confirmPassword}>
+                            <input {...register("confirmPassword")}
+                                className={`p-2 border box-border w-[300px] rounded-md ${errors.confirmPassword ? "border-red-500" : "border-gray-400"}`}
+                                type="password" name="confirmPassword" id="confirmPassword" placeholder="Re-enter Password" />
+                        </Field>
+
                     </Fieldset>
 
-                    {/* Social Handles  */}
-                    {/* <Fieldset label="Enter Social Handles">
-                        {
-                            fields.map((field, index) => {
-                                return (
-                                    <div key={field.id}
-                                        className="flex justify-between items-center w-full p-2 mb-5 border border-gray-300 rounded-md"
-                                    >
-                                        <Field label="Name">
-                                            <input {...register(`socials.${index}.name`)}
-                                                className="p-2 border box-border w-[300px] rounded-md border-gray-400"
-                                                type="text" name={`socials.${index}.name`} id={`socials.${index}.name`} placeholder="Facebook" />
-                                        </Field>
-
-                                        <Field label="URL">
-                                            <input {...register(`socials.${index}.url`)}
-                                                className="p-2 border box-border w-[300px] rounded-md border-gray-400"
-                                                type="text" name={`socials.${index}.url`} id={`socials.${index}.url`} placeholder="https://facebook.com" />
-                                        </Field>
-                                        <button onClick={() => remove(index)}
-                                            className="mt-8 text-red-900 font-medium border border-red-800 rounded-full w-[3.25rem] cursor-pointer">&#x2715;</button>
-                                    </div>
-                                )
-                            })
-                        }
-                        <button onClick={() => append({ name: "", url: "" })}
-                            className="m-auto my-2 text-blue-900 font-medium border border-blue-800 rounded-full w-8 h-8 cursor-pointer">&#43;</button>
-                    </Fieldset> */}
                     <Field>
-                        <button className="p-2 mt-4 bg-indigo-500 hover:bg-indigo-600 text-white rounded-md w-[300px] cursor-pointer">Sign up</button>
+                        <button className="p-2 mt-4 bg-indigo-500 hover:bg-indigo-600 text-white rounded-md w-[300px] cursor-pointer">
+                            {isLoading ? "Signing Up..." : "Sign Up"}
+                        </button>
                     </Field>
+
+                    {isLoading && <Loader />}
                 </form>
                 <NavLink className="text-gray-900 block" to="/login">Already have an account? <span className="underline text-indigo-500">Sign in</span></NavLink>
             </div>
         </div >
     )
 }
+
 
 export default Register;

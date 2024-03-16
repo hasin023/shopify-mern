@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AiOutlineHome, AiOutlineShopping, AiOutlineLogin, AiOutlineLogout, AiOutlineUserAdd, AiOutlineShoppingCart, } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
-import { FaHeart } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./Navigation.css";
@@ -15,12 +15,7 @@ const Navigation = () => {
 
     const { userInfo } = useSelector((state) => state.auth);
 
-    const [dropdownOpen, setDropdownOpen] = useState(false);
     const [showSidebar, setShowSidebar] = useState(false);
-
-    const toggleDropdown = () => {
-        setDropdownOpen(!dropdownOpen);
-    };
 
     const [logoutApiCall] = useLogoutMutation();
 
@@ -75,9 +70,10 @@ const Navigation = () => {
                     </div>
                 </Link>
 
+
                 <Link to="/favorite" className="flex relative">
                     <div className="flex justify-center items-center transition-transform transform hover:translate-x-2">
-                        <FaHeart className="mt-[3rem] mr-2 ml-1" size={20} />
+                        <FaRegHeart className="mt-[3rem] mr-2 ml-1" size={20} />
                         <span className="hidden nav-item-name mt-[3rem]">
                             Favorites
                         </span>{" "}
@@ -115,7 +111,7 @@ const Navigation = () => {
                 )}
 
 
-                {dropdownOpen && userInfo && (
+                {userInfo && (
                     <ul
                         className={`absolute right-0 mt-2 mr-14 space-y-2 bg-white text-gray-600 ${!userInfo.isAdmin ? "-top-20" : "-top-80"
                             } `}
@@ -165,19 +161,6 @@ const Navigation = () => {
                             </>
                         )}
 
-                        <li>
-                            <Link to="/profile" className="block px-4 py-2 hover:bg-gray-100">
-                                Profile
-                            </Link>
-                        </li>
-                        <li>
-                            <button
-                                onClick={logoutHandler}
-                                className="block w-full px-4 py-2 text-left hover:bg-gray-100"
-                            >
-                                Logout
-                            </button>
-                        </li>
                     </ul>
                 )}
                 {!userInfo && (

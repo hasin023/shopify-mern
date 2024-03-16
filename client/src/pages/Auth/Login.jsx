@@ -42,10 +42,10 @@ const Login = () => {
                 navigate(redirect);
                 console.log("User logged in");
             } else {
-                setError("root", { message: "Invalid email or password" });
+                console.log("Invalid email or password");
             }
         } catch (error) {
-            console.log(error);
+            setError("root", { message: "Invalid email or password" });
         }
     }
 

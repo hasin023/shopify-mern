@@ -7,9 +7,9 @@ import { Provider } from "react-redux";
 
 import { Route, RouterProvider, createRoutesFromElements } from "react-router-dom";
 import { createBrowserRouter } from "react-router-dom";
-import Login from './pages/Auth/Login.jsx';
 import Register from './pages/Auth/Register.jsx';
 import Reset from './pages/Auth/Reset.jsx';
+import Login from './pages/Auth/Login.jsx';
 
 
 const router = createBrowserRouter(
