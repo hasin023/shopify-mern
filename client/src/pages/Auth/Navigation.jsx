@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { AiOutlineHome, AiOutlineShopping, AiOutlineLogin, AiOutlineUserAdd, AiOutlineShoppingCart, } from "react-icons/ai";
+import { AiOutlineHome, AiOutlineShopping, AiOutlineLogin, AiOutlineLogout, AiOutlineUserAdd, AiOutlineShoppingCart, } from "react-icons/ai";
+import { CgProfile } from "react-icons/cg";
 import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -76,7 +77,7 @@ const Navigation = () => {
 
                 <Link to="/favorite" className="flex relative">
                     <div className="flex justify-center items-center transition-transform transform hover:translate-x-2">
-                        <FaHeart className="mt-[3rem] mr-2" size={20} />
+                        <FaHeart className="mt-[3rem] mr-2 ml-1" size={20} />
                         <span className="hidden nav-item-name mt-[3rem]">
                             Favorites
                         </span>{" "}
@@ -86,33 +87,33 @@ const Navigation = () => {
             </div>
 
             <div className="relative">
-                <button
-                    onClick={toggleDropdown}
-                    className="flex items-center text-gray-800 focus:outline-none"
-                >
-                    {userInfo ? (
-                        <span className="text-white">{userInfo.username}</span>
-                    ) : (
-                        <></>
-                    )}
-                    {userInfo && (
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className={`h-4 w-4 ml-1 ${dropdownOpen ? "transform rotate-180" : ""
-                                }`}
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="white"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d={dropdownOpen ? "M5 15l7-7 7 7" : "M19 9l-7 7-7-7"}
-                            />
-                        </svg>
-                    )}
-                </button>
+
+                {userInfo ? (
+                    <ul>
+                        <li>
+                            <Link
+                                to="/profile"
+                                className="flex items-center mt-5 transition-transform transform hover:translate-x-2"
+                            >
+                                <CgProfile size={26} />
+                                <span className="hidden ml-2 text-lg font-semibold nav-item-name">{userInfo.username}</span>
+                            </Link>
+                        </li>
+
+                        <li>
+                            <button
+                                onClick={logoutHandler}
+                                className="flex items-center mt-5 transition-transform transform hover:translate-x-2"
+                            >
+                                <AiOutlineLogout className="mr-2 mt-[4px]" size={26} />
+                                <span className="hidden mt-1 nav-item-name">Log out</span>
+                            </button>
+                        </li>
+                    </ul>
+                ) : (
+                    <></>
+                )}
+
 
                 {dropdownOpen && userInfo && (
                     <ul
