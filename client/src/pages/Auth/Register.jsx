@@ -34,7 +34,7 @@ const Register = () => {
         // console.log(formData);
         const { username, email, password, confirmPassword } = formData;
 
-        console.log(password === confirmPassword);
+        // console.log(password === confirmPassword);
 
         if (password !== confirmPassword) {
             setError("confirmPassword", { message: "Passwords do not match" });
@@ -60,7 +60,7 @@ const Register = () => {
                     <Fieldset label="Enter personal details">
 
                         <Field label="Username" error={errors.username}>
-                            <input {...register("username", { required: "Full Name is required" })}
+                            <input {...register("username", { required: "Username is required" })}
                                 className={`p-2 border box-border w-[300px] rounded-md ${errors.username ? "border-red-500" : "border-gray-400"}`}
                                 type="text" name="username" id="username" placeholder="Example Name" />
                         </Field>

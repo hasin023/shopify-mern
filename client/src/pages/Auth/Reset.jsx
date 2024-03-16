@@ -13,9 +13,7 @@ const Reset = () => {
         const { email } = formData;
 
         try {
-            await resetPassword(email);
-            console.log("Password reset email sent");
-            navigate("/login");
+            //TODO - send reset link to email
         } catch (error) {
             console.log(error);
         }
