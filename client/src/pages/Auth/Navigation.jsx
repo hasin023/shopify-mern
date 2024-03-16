@@ -21,6 +21,7 @@ const Navigation = () => {
 
     const { userInfo } = useSelector((state) => state.auth);
 
+    // eslint-disable-next-line no-unused-vars
     const [showSidebar, setShowSidebar] = useState(false);
 
     const [logoutApiCall] = useLogoutMutation();
