@@ -8,6 +8,7 @@ import {
     useUpdateUserMutation,
 } from "../../redux/api/usersApiSlice";
 import AdminMenu from "./AdminMenu";
+import { Table } from 'flowbite-react';
 
 const UserList = () => {
 
