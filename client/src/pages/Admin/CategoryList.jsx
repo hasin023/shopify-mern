@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     useCreateCategoryMutation,
     useUpdateCategoryMutation,
@@ -12,7 +12,7 @@ import AdminMenu from "./AdminMenu";
 
 const CategoryList = () => {
 
-    const { data: categories } = useFetchCategoriesQuery();
+    const { data: categories, refetch } = useFetchCategoriesQuery();
     const [name, setName] = useState("");
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [updatingName, setUpdatingName] = useState("");
@@ -22,9 +22,79 @@ const CategoryList = () => {
     const [updateCategory] = useUpdateCategoryMutation();
     const [deleteCategory] = useDeleteCategoryMutation();
 
-    const handleCreateCategory = async () => { };
-    const handleUpdateCategory = async () => { };
-    const handleDeleteCategory = async () => { };
+    useEffect(() => {
+        refetch();
+    }, [refetch]);
+
+    const handleCreateCategory = async (e) => {
+        e.preventDefault();
+
+        if (!name) {
+            alert("Category name is required.");
+            return;
+        }
+
+        try {
+            const result = await createCategory({ name }).unwrap();
+            if (result.error) {
+                console.error(result.error);
+            } else {
+                setName("");
+                refetch();
+                console.log(result);
+                console.log("Category created successfully.");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleUpdateCategory = async (e) => {
+        e.preventDefault();
+
+        if (!updatingName) {
+            alert("Category name is required.");
+            return;
+        }
+
+        try {
+            const result = await updateCategory({
+                categoryId: selectedCategory._id,
+                updatedCategory: {
+                    name: updatingName,
+                },
+            }).unwrap();
+
+            if (result.error) {
+                console.error(result.error);
+            } else {
+                console.log("Category updated successfully.");
+                refetch();
+                setSelectedCategory(null);
+                setUpdatingName("");
+                setModalVisible(false);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleDeleteCategory = async () => {
+        try {
+            const result = await deleteCategory(selectedCategory._id).unwrap();
+
+            if (result.error) {
+                console.error(result.error);
+            } else {
+                console.log("Category deleted successfully.");
+                refetch();
+                setSelectedCategory(null);
+                setModalVisible(false);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
 
     return (
