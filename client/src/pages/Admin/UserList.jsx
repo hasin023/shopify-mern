@@ -8,7 +8,6 @@ import {
     useUpdateUserMutation,
 } from "../../redux/api/usersApiSlice";
 import AdminMenu from "./AdminMenu";
-import { Table } from 'flowbite-react';
 
 const UserList = () => {
 
@@ -25,7 +24,7 @@ const UserList = () => {
     }, [refetch]);
 
     const deleteHandler = async (id) => {
-        if (window.confirm("Are you sure")) {
+        if (window.confirm(`Delete user with id ${id}`)) {
             try {
                 await deleteUser(id);
                 refetch();
@@ -67,22 +66,26 @@ const UserList = () => {
             ) : (
                 <div className="flex flex-col md:flex-row">
                     <AdminMenu />
-                    <table className="w-full md:w-4/5 mx-auto">
+                    <table className="w-full md:w-4/5 mx-auto border-collapse">
                         <thead>
-                            <tr>
-                                <th className="px-4 py-2 text-left">ID</th>
-                                <th className="px-4 py-2 text-left">NAME</th>
-                                <th className="px-4 py-2 text-left">EMAIL</th>
-                                <th className="px-4 py-2 text-left">ADMIN</th>
-                                <th className="px-4 py-2"></th>
+                            <tr className="bg-gray-200">
+                                <th className="px-4 py-2 text-left border border-gray-300">ID</th>
+                                <th className="px-4 py-2 text-left border border-gray-300">NAME</th>
+                                <th className="px-4 py-2 text-left border border-gray-300">EMAIL</th>
+                                <th className="px-4 py-2 text-left border border-gray-300">ADMIN</th>
+                                <th className="px-4 py-2 border border-gray-300"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {users.map((user) => (
-                                <tr key={user._id}>
-                                    <td className="px-4 py-2">{user._id}</td>
-                                    <td className="px-4 py-2">
-                                        {editableUserId === user._id ? (
+                            {users.map((user, index) => (
+                                <tr
+                                    key={user._id}
+                                    className={`${index % 2 === 0 ? "bg-white" : "bg-gray-100"
+                                        } hover:bg-gray-200 transition-colors`}
+                                >
+                                    <td className="px-4 py-2 border border-gray-300">{user._id}</td>
+                                    <td className="px-4 py-2 border border-gray-300">
+                                        {editableUserId === user._id && !user.isAdmin ? (
                                             <div className="flex items-center">
                                                 <input
                                                     type="text"
@@ -101,17 +104,15 @@ const UserList = () => {
                                             <div className="flex items-center">
                                                 {user.username}{" "}
                                                 <button
-                                                    onClick={() =>
-                                                        toggleEdit(user._id, user.username, user.email)
-                                                    }
+                                                    onClick={() => toggleEdit(user._id, user.username, user.email)}
                                                 >
                                                     <FaEdit className="ml-[1rem]" />
                                                 </button>
                                             </div>
                                         )}
                                     </td>
-                                    <td className="px-4 py-2">
-                                        {editableUserId === user._id ? (
+                                    <td className="px-4 py-2 border border-gray-300">
+                                        {editableUserId === user._id && !user.isAdmin ? (
                                             <div className="flex items-center">
                                                 <input
                                                     type="text"
@@ -130,23 +131,21 @@ const UserList = () => {
                                             <div className="flex items-center">
                                                 <a href={`mailto:${user.email}`}>{user.email}</a>{" "}
                                                 <button
-                                                    onClick={() =>
-                                                        toggleEdit(user._id, user.name, user.email)
-                                                    }
+                                                    onClick={() => toggleEdit(user._id, user.name, user.email)}
                                                 >
                                                     <FaEdit className="ml-[1rem]" />
                                                 </button>
                                             </div>
                                         )}
                                     </td>
-                                    <td className="px-4 py-2">
+                                    <td className="px-4 py-2 border border-gray-300">
                                         {user.isAdmin ? (
                                             <FaCheck style={{ color: "green" }} />
                                         ) : (
                                             <FaTimes style={{ color: "red" }} />
                                         )}
                                     </td>
-                                    <td className="px-4 py-2">
+                                    <td className="px-4 py-2 border border-gray-300">
                                         {!user.isAdmin && (
                                             <div className="flex">
                                                 <button
