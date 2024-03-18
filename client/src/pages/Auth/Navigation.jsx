@@ -108,7 +108,7 @@ const Navigation = () => {
                                 className="flex items-center mt-5 transition-transform transform hover:translate-x-2"
                             >
                                 <CiViewList size={26} />
-                                <span className="hidden ml-2 nav-item-name">Products</span>
+                                <span className="hidden ml-2 nav-item-name">Add Product</span>
                             </Link>
                         </li>
                         <li>
