@@ -94,10 +94,10 @@ const ProductUpdate = () => {
 
             const { data } = await deleteProduct(params._id);
             alert(`"${data.name}" is deleted`);
+        } catch (error) {
+            console.error(error);
+        } finally {
             navigate("/admin/allproductslist");
-        } catch (err) {
-            console.log(err);
-            alert("Delete failed. Try again.");
         }
     };
 
@@ -141,6 +141,7 @@ const ProductUpdate = () => {
                             <select id="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                                 onChange={(e) => setCategory(e.target.value)}
                             >
+                                <option value="">Select category</option>
                                 {categories?.map((c) => (
                                     <option key={c._id} value={c._id}>
                                         {c.name}
@@ -165,6 +166,11 @@ const ProductUpdate = () => {
                         <button type="submit" onClick={handleSubmit}
                             className="text-white bg-yellow-500 hover:bg-yellow-600 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                             Update product
+                        </button>
+
+                        <button type="submit" onClick={handleDelete}
+                            className="text-white bg-red-600 hover:bg-red-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                            Delete product
                         </button>
                     </div>
                 </form>

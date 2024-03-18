@@ -43,7 +43,7 @@ const ProductList = () => {
                 alert("Product create failed. Try Again.");
             } else {
                 alert(`${data.name} is created`);
-                navigate("/");
+                navigate("/admin/allproductslist");
             }
         } catch (error) {
             console.error(error);
@@ -105,6 +105,7 @@ const ProductList = () => {
                             <select id="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                                 onChange={(e) => setCategory(e.target.value)}
                             >
+                                <option value="">Select category</option>
                                 {categories?.map((c) => (
                                     <option key={c._id} value={c._id}>
                                         {c.name}
