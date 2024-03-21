@@ -38,11 +38,11 @@ const AllProducts = () => {
                                         <img
                                             src='https://placehold.co/400'
                                             alt={product.name}
-                                            className="w-[10rem] object-cover"
+                                            className="w-[8rem] object-cover"
                                         />
-                                        <div className="p-4 flex flex-col justify-around">
+                                        <div className="p-3 flex flex-col justify-around">
                                             <div className="flex justify-between">
-                                                <h5 className="text-xl font-semibold mb-2">
+                                                <h5 className="text-xl font-semibold mb-4">
                                                     {product?.name}
                                                 </h5>
 

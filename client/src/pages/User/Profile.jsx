@@ -82,7 +82,7 @@ const Profile = () => {
                                         required: "Password is required",
                                         minLength: { value: 6, message: "Password must be at least 6 characters" },
                                     })}
-                                    className={`focus:outline-indigo-400 invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 p-2 border box-border w-full rounded-md ${errors.password ? "border-red-500" : "border-gray-400"
+                                    className={`focus:outline-indigo-400 invalid:border-indigo-500 invalid:text-indigo-600 focus:invalid:border-indigo-500 p-2 border box-border w-full rounded-md ${errors.password ? "border-red-500" : "border-gray-400"
                                         }`}
                                     type="password"
                                     name="password"
