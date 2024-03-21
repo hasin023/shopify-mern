@@ -81,11 +81,11 @@ const Shop = () => {
   };
 
   return (
-    <>
+    <div className="mt-6">
       <div className="container mx-auto">
         <div className="flex md:flex-row">
-          <div className="bg-[#151515] p-3 mt-2 mb-2">
-            <h2 className="h4 text-center py-2 bg-black rounded-full mb-2">
+          <div className="bg-indigo-100 p-4 mt-3 mb-2 rounded-md">
+            <h2 className="h4 text-center py-2 text-white bg-indigo-400 rounded-full mb-2">
               Filter by Categories
             </h2>
 
@@ -95,14 +95,15 @@ const Shop = () => {
                   <div className="flex ietms-center mr-4">
                     <input
                       type="checkbox"
-                      id="red-checkbox"
+                      id={c}
+                      name="category"
                       onChange={(e) => handleCheck(e.target.checked, c._id)}
                       className="w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />
 
                     <label
-                      htmlFor="indigo-checkbox"
-                      className="ml-2 text-sm font-medium text-white dark:text-gray-300"
+                      htmlFor="pink-checkbox"
+                      className="ml-2 text-sm font-medium"
                     >
                       {c.name}
                     </label>
@@ -111,7 +112,7 @@ const Shop = () => {
               ))}
             </div>
 
-            <h2 className="h4 text-center py-2 bg-black rounded-full mb-2">
+            <h2 className="h4 text-center py-2 text-white bg-indigo-400 rounded-full mb-2">
               Filter by Brands
             </h2>
 
@@ -128,8 +129,8 @@ const Shop = () => {
                     />
 
                     <label
-                      htmlFor="indigo-radio"
-                      className="ml-2 text-sm font-medium text-white dark:text-gray-300"
+                      htmlFor="pink-radio"
+                      className="ml-2 text-sm font-medium"
                     >
                       {brand}
                     </label>
@@ -138,7 +139,7 @@ const Shop = () => {
               ))}
             </div>
 
-            <h2 className="h4 text-center py-2 bg-black rounded-full mb-2">
+            <h2 className="h4 text-center py-2 text-white bg-indigo-400 rounded-full mb-2">
               Filer by Price
             </h2>
 
@@ -154,7 +155,7 @@ const Shop = () => {
 
             <div className="p-5 pt-0">
               <button
-                className="w-full border my-4"
+                className="w-full border my-3 bg-indigo-500 px-2 py-1 rounded-xl hover:bg-indigo-600 text-white"
                 onClick={() => window.location.reload()}
               >
                 Reset
@@ -162,8 +163,7 @@ const Shop = () => {
             </div>
           </div>
 
-          <div className="p-3">
-            <h2 className="h4 text-center mb-2">{products?.length} Products</h2>
+          <div className="ml-10">
             <div className="flex flex-wrap">
               {products.length === 0 ? (
                 <Loader />
@@ -178,7 +178,7 @@ const Shop = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -58,7 +58,7 @@ const ProductCarousel = () => {
                   className="w-full rounded-lg object-cover h-[30rem]"
                 />
 
-                <div className="mt-4 flex justify-between">
+                <div className="mt-4 flex justify-between bg-indigo-200 p-4 rounded-lg">
                   <div className="one">
                     <h2>{name}</h2>
                     <p> $ {price}</p> <br /> <br />

@@ -13,7 +13,7 @@ const Product = ({ product }) => {
         <HeartIcon product={product} />
       </div>
 
-      <div className="p-4">
+      <div className="p-4 bg-indigo-300">
         <Link to={`/product/${product._id}`}>
           <h2 className="flex justify-between items-center">
             <div className="text-lg">{product.name}</div>
