@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import {
   useGetProductDetailsQuery,
   useCreateReviewMutation,
@@ -52,9 +51,9 @@ const ProductDetails = () => {
         comment,
       }).unwrap();
       refetch();
-      toast.success("Review created successfully");
+      alert("Review Submitted");
     } catch (error) {
-      toast.error(error?.data || error.message);
+      alert("Review not submitted");
     }
   };
 
