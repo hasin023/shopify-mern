@@ -5,6 +5,9 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
+    "server-install": "npm install --prefix server",
+    "client-install": "npm install --prefix client",
+    "install-all": "npm run server-install && npm run client-install",
     "server": "nodemon server/server.js",
     "client": "npm run dev --prefix client",
     "dev": "concurrently \"npm run client\" \"npm run server\""

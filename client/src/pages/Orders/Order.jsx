@@ -21,8 +21,7 @@ const Order = () => {
   } = useGetOrderDetailsQuery(orderId);
 
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
-  const [deliverOrder, { isLoading: loadingDeliver }] =
-    useDeliverOrderMutation();
+  const [deliverOrder, { isLoading: loadingDeliver }] = useDeliverOrderMutation();
   const { userInfo } = useSelector((state) => state.auth);
 
   const {
@@ -104,20 +103,6 @@ const Order = () => {
         alert("An error occurred");
       }
     });
-  }
-
-  function createOrder(data, actions) {
-    return actions.order
-      .create({
-        purchase_units: [{ amount: { value: order.totalPrice } }],
-      })
-      .then((orderID) => {
-        return orderID;
-      });
-  }
-
-  function onError(err) {
-    alert("An error occurred");
   }
 
   const deliverHandler = async () => {

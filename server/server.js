@@ -15,6 +15,7 @@ import orderRoutes from "./routes/orderRoutes.js";
 
 import { ObjectId } from 'mongodb';
 import SSLCommerzPayment from 'sslcommerz-lts';
+import Order from "./models/orderModel.js";
 const store_id = 'shopi65fd297454fcb';
 const store_passwd = 'shopi65fd297454fcb@ssl';
 const is_live = false;
@@ -47,6 +48,7 @@ app.get("/api/config/ssl", (req, res) => {
 
 // Get ssl order datas
 app.post("/order/:id", async (req, res) => {
+    const orderId = req.params.id;
     const order = req.body;
     const transactionId = new ObjectId().toString();
 
@@ -54,9 +56,9 @@ app.post("/order/:id", async (req, res) => {
         total_amount: order.total_amount,
         currency: 'BDT',
         tran_id: transactionId,
-        success_url: `http://localhost:8000/order/${order.orderId}`,
-        fail_url: `http://localhost:8000/order/${order.orderId}`,
-        cancel_url: `http://localhost:8000/order/${order.orderId}`,
+        success_url: `http://localhost:8000/payment/success/${transactionId}`,
+        fail_url: `http://localhost:8000/payment/fail/${transactionId}`,
+        cancel_url: `http://localhost:8000/payment/cancel/${transactionId}`,
         ipn_url: `http://localhost:8000/order/${order.orderId}`,
         emi_option: 0,
         shipping_method: 'NO',
@@ -88,6 +90,21 @@ app.post("/order/:id", async (req, res) => {
         let GatewayPageURL = apiResponse.GatewayPageURL
         res.send({ url: GatewayPageURL })
         console.log('Redirecting to: ', GatewayPageURL)
+    });
+
+    app.post("/payment/success/:tran_id", (req, res) => {
+        console.log('Success');
+        res.send(`Payment successful for Trnx ID: ${req.params.tran_id}`);
+    });
+
+    app.post("/payment/fail/:tran_id", (req, res) => {
+        console.log('Failed');
+        res.send(`Payment failed for Trnx ID: ${req.params.tran_id}`);
+    });
+
+    app.post("/payment/cancel/:tran_id", (req, res) => {
+        console.log('Cancelled');
+        res.send(`Payment cancelled for Trnx ID: ${req.params.tran_id}`);
     });
 
 });
