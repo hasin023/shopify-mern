@@ -12,6 +12,10 @@ import productRoutes from "./routes/productRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 
+import SSLCommerzPayment from 'sslcommerz-lts';
+const store_id = process.env.SSL_STORE_ID;
+const store_passwd = process.env.SSL_PASSWORD;
+const is_live = false
 
 dotenv.config();
 const port = process.env.PORT || 8000;
@@ -30,7 +34,13 @@ app.use("/api/products", productRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/orders", orderRoutes);
 
-// TODO Add SSL for Payment
+// SSL for Payment
+app.get("/api/config/ssl", (req, res) => {
+    res.send({
+        storeId: process.env.SSL_STORE_ID,
+        storePassword: process.env.SSL_PASSWORD,
+    });
+});
 
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname + "/uploads")));

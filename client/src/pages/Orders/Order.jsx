@@ -1,14 +1,12 @@
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import Messsage from "../../components/Message";
 import Loader from "../../components/Loader";
 import {
   useDeliverOrderMutation,
   useGetOrderDetailsQuery,
-  useGetPaypalClientIdQuery,
+  useGetSSLStoreIdQuery,
   usePayOrderMutation,
 } from "../../redux/api/orderApiSlice";
 
@@ -27,43 +25,24 @@ const Order = () => {
     useDeliverOrderMutation();
   const { userInfo } = useSelector((state) => state.auth);
 
-  const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
-
   const {
-    data: paypal,
-    isLoading: loadingPaPal,
-    error: errorPayPal,
-  } = useGetPaypalClientIdQuery();
+    data: ssl,
+    isLoading: loadingSsl,
+    error: errorssl,
+  } = useGetSSLStoreIdQuery();
 
   useEffect(() => {
-    if (!errorPayPal && !loadingPaPal && paypal.clientId) {
-      const loadingPaPalScript = async () => {
-        paypalDispatch({
-          type: "resetOptions",
-          value: {
-            "client-id": paypal.clientId,
-            currency: "USD",
-          },
-        });
-        paypalDispatch({ type: "setLoadingStatus", value: "pending" });
-      };
 
-      if (order && !order.isPaid) {
-        if (!window.paypal) {
-          loadingPaPalScript();
-        }
-      }
-    }
-  }, [errorPayPal, loadingPaPal, order, paypal, paypalDispatch]);
+  }, []);
 
   function onApprove(data, actions) {
     return actions.order.capture().then(async function (details) {
       try {
         await payOrder({ orderId, details });
         refetch();
-        toast.success("Order is paid");
+        alert("Transaction completed by " + details.payer.name.given_name);
       } catch (error) {
-        toast.error(error?.data?.message || error.message);
+        alert("An error occurred");
       }
     });
   }
@@ -79,7 +58,7 @@ const Order = () => {
   }
 
   function onError(err) {
-    toast.error(err.message);
+    alert("An error occurred");
   }
 
   const deliverHandler = async () => {

@@ -1,5 +1,5 @@
 import { apiSlice } from "./apiSlice";
-import { ORDERS_URL, PAYPAL_URL } from "../constants";
+import { ORDERS_URL, SSL_URL } from "../constants";
 
 export const orderApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -25,11 +25,9 @@ export const orderApiSlice = apiSlice.injectEndpoints({
             }),
         }),
 
-
-        // TODO Change paypal to SSL
-        getPaypalClientId: builder.query({
+        getSSLStoreId: builder.query({
             query: () => ({
-                url: PAYPAL_URL,
+                url: SSL_URL,
             }),
         }),
 
@@ -75,7 +73,7 @@ export const {
     useCreateOrderMutation,
     useGetOrderDetailsQuery,
     usePayOrderMutation,
-    useGetPaypalClientIdQuery,
+    useGetSSLStoreIdQuery,
     useGetMyOrdersQuery,
     useDeliverOrderMutation,
     useGetOrdersQuery,
