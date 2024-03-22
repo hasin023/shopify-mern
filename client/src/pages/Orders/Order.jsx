@@ -34,12 +34,67 @@ const Order = () => {
   const [isPending, setIsPending] = useState(true);
 
   useEffect(() => {
-    if (ssl) {
+    if (ssl && !loadingSsl && !errorssl) {
       setIsPending(false);
     }
-  }, [ssl]);
+  }, [ssl, loadingSsl, errorssl]);
 
-  function onApprove(data, actions) {
+  const handlePay = () => {
+
+    fetch("http://localhost:8000/order/:id", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        order_id: orderId,
+        total_amount: order.totalPrice,
+        cus_name: userInfo.username,
+        cus_email: userInfo.email,
+        cus_add1: order.shippingAddress.address,
+        cus_city: order.shippingAddress.city,
+        cus_postcode: order.shippingAddress.postalCode,
+        cus_country: order.shippingAddress.country,
+        num_of_items: order.orderItems.length,
+        product_name: order.orderItems.map((item) => item.name),
+        product_amount: order.orderItems.map((item) => item.price),
+      }),
+    }).then((res) => res.json()).then((result) => {
+      console.log(result);
+      window.location.replace(result.url);
+    });
+
+  }
+
+  /*
+  
+  All the transaction made using this environment are counted as test transaction and has no effect with accounting, URL starts with https://sandbox.sslcommerz.com.
+  
+  
+  Test Credit Card Account Numbers
+  
+  VISA:
+  
+  Card Number: 4111111111111111
+  Exp: 12/25
+  CVV: 111
+  Mastercard:
+  
+  Card Number: 5111111111111111
+  Exp: 12/25
+  CVV: 111
+  American Express:
+  
+  Card Number: 371111111111111
+  Exp: 12/25
+  CVV: 111
+  
+  
+  Mobile OTP: 111111 or 123456
+    
+  */
+
+  function orderApprove(data, actions) {
     return actions.order.capture().then(async function (details) {
       try {
         await payOrder({ orderId, details });
@@ -182,7 +237,7 @@ const Order = () => {
             ) : (
               <div>
                 <div>
-                  <button className="bg-blue-500 text-white w-full py-2 rounded-sm mt-8 hover:bg-blue-400">
+                  <button onClick={handlePay} className="bg-blue-500 text-white w-full py-2 rounded-sm mt-8 hover:bg-blue-400">
                     Pay
                   </button>
                 </div>
