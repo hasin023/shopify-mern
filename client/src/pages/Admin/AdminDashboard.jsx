@@ -62,7 +62,7 @@ const AdminDashboard = () => {
                 <div className="w-[80%] flex justify-around ml-20 flex-wrap">
                     <div className="rounded-lg bg-indigo-200 p-5 w-[20rem] mt-5">
                         <div className="font-bold rounded-full w-[3rem] bg-white text-center p-3">
-                            $
+                            BDT
                         </div>
 
                         <p className="mt-5">Sales</p>
@@ -72,7 +72,7 @@ const AdminDashboard = () => {
                     </div>
                     <div className="rounded-lg bg-indigo-200 p-5 w-[20rem] mt-5">
                         <div className="font-bold rounded-full w-[3rem] bg-white text-center p-3">
-                            $
+                            BDT
                         </div>
 
                         <p className="mt-5">Customers</p>
@@ -82,7 +82,7 @@ const AdminDashboard = () => {
                     </div>
                     <div className="rounded-lg bg-indigo-200 p-5 w-[20rem] mt-5">
                         <div className="font-bold rounded-full w-[3rem] bg-white text-center p-3">
-                            $
+                            BDT
                         </div>
 
                         <p className="mt-5">All Orders</p>

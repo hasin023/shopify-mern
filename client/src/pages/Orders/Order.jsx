@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Messsage from "../../components/Message";
@@ -31,9 +31,13 @@ const Order = () => {
     error: errorssl,
   } = useGetSSLStoreIdQuery();
 
-  useEffect(() => {
+  const [isPending, setIsPending] = useState(true);
 
-  }, []);
+  useEffect(() => {
+    if (ssl) {
+      setIsPending(false);
+    }
+  }, [ssl]);
 
   function onApprove(data, actions) {
     return actions.order.capture().then(async function (details) {
@@ -71,8 +75,8 @@ const Order = () => {
   ) : error ? (
     <Messsage variant="danger">{error.data.message}</Messsage>
   ) : (
-    <div className="container flex flex-col ml-[10rem] md:flex-row">
-      <div className="md:w-2/3 pr-4">
+    <div className="container flex flex-col gap-8 ml-[10rem] mt-12 md:flex-row">
+      <div className="md:w-3/5 w-1/3 pr-4">
         <div className="border gray-300 mt-5 pb-4 mb-5">
           {order.orderItems.length === 0 ? (
             <Messsage>Order is empty</Messsage>
@@ -107,7 +111,7 @@ const Order = () => {
                       <td className="p-2 text-center">{item.qty}</td>
                       <td className="p-2 text-center">{item.price}</td>
                       <td className="p-2 text-center">
-                        $ {(item.qty * item.price).toFixed(2)}
+                        BDT {(item.qty * item.price).toFixed(2)}
                       </td>
                     </tr>
                   ))}
@@ -118,30 +122,30 @@ const Order = () => {
         </div>
       </div>
 
-      <div className="md:w-1/3">
+      <div className="md:w-2/5">
         <div className="mt-5 border-gray-300 pb-4 mb-4">
           <h2 className="text-xl font-bold mb-2">Shipping</h2>
           <p className="mb-4 mt-4">
-            <strong className="text-pink-500">Order:</strong> {order._id}
+            <strong className="text-indigo-500">Order:</strong> {order._id}
           </p>
 
           <p className="mb-4">
-            <strong className="text-pink-500">Name:</strong>{" "}
+            <strong className="text-indigo-500">Name:</strong>{" "}
             {order.user.username}
           </p>
 
           <p className="mb-4">
-            <strong className="text-pink-500">Email:</strong> {order.user.email}
+            <strong className="text-indigo-500">Email:</strong> {order.user.email}
           </p>
 
           <p className="mb-4">
-            <strong className="text-pink-500">Address:</strong>{" "}
+            <strong className="text-indigo-500">Address:</strong>{" "}
             {order.shippingAddress.address}, {order.shippingAddress.city}{" "}
             {order.shippingAddress.postalCode}, {order.shippingAddress.country}
           </p>
 
           <p className="mb-4">
-            <strong className="text-pink-500">Method:</strong>{" "}
+            <strong className="text-indigo-500">Method:</strong>{" "}
             {order.paymentMethod}
           </p>
 
@@ -151,23 +155,23 @@ const Order = () => {
             <Messsage variant="danger">Not paid</Messsage>
           )}
         </div>
-
+        <hr />
         <h2 className="text-xl font-bold mb-2 mt-[3rem]">Order Summary</h2>
         <div className="flex justify-between mb-2">
           <span>Items</span>
-          <span>$ {order.itemsPrice}</span>
+          <span>BDT {order.itemsPrice}</span>
         </div>
         <div className="flex justify-between mb-2">
           <span>Shipping</span>
-          <span>$ {order.shippingPrice}</span>
+          <span>BDT {order.shippingPrice}</span>
         </div>
         <div className="flex justify-between mb-2">
           <span>Tax</span>
-          <span>$ {order.taxPrice}</span>
+          <span>BDT {order.taxPrice}</span>
         </div>
         <div className="flex justify-between mb-2">
           <span>Total</span>
-          <span>$ {order.totalPrice}</span>
+          <span>BDT {order.totalPrice}</span>
         </div>
 
         {!order.isPaid && (
@@ -178,11 +182,9 @@ const Order = () => {
             ) : (
               <div>
                 <div>
-                  <PayPalButtons
-                    createOrder={createOrder}
-                    onApprove={onApprove}
-                    onError={onError}
-                  ></PayPalButtons>
+                  <button className="bg-blue-500 text-white w-full py-2 rounded-sm mt-8 hover:bg-blue-400">
+                    Pay
+                  </button>
                 </div>
               </div>
             )}
@@ -194,7 +196,7 @@ const Order = () => {
           <div>
             <button
               type="button"
-              className="bg-pink-500 text-white w-full py-2"
+              className="bg-blue-500 text-white w-full py-2"
               onClick={deliverHandler}
             >
               Mark As Delivered
