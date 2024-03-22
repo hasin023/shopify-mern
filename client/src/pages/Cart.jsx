@@ -24,7 +24,7 @@ const Cart = () => {
 
   return (
     <>
-      <div className="container flex justify-around items-start flex wrap mx-auto mt-8">
+      <div className="container flex justify-around items-start flex-wrap mx-auto mt-8">
         {cartItems.length === 0 ? (
           <div>
             Your cart is empty <Link to="/shop">Go To Shop</Link>
@@ -96,7 +96,7 @@ const Cart = () => {
                   </div>
 
                   <button
-                    className="bg-indigo-500 mt-4 py-2 px-4 rounded-full text-lg w-full"
+                    className="bg-indigo-500 text-white mt-4 py-2 px-4 rounded-full text-lg w-full"
                     disabled={cartItems.length === 0}
                     onClick={checkoutHandler}
                   >
