@@ -20,7 +20,7 @@ const Order = () => {
     error,
   } = useGetOrderDetailsQuery(orderId);
 
-  const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
+  const [{ isLoading: loadingPay }] = usePayOrderMutation();
   const [deliverOrder, { isLoading: loadingDeliver }] = useDeliverOrderMutation();
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -92,18 +92,6 @@ const Order = () => {
   Mobile OTP: 111111 or 123456
     
   */
-
-  function orderApprove(data, actions) {
-    return actions.order.capture().then(async function (details) {
-      try {
-        await payOrder({ orderId, details });
-        refetch();
-        alert("Transaction completed by " + details.payer.name.given_name);
-      } catch (error) {
-        alert("An error occurred");
-      }
-    });
-  }
 
   const deliverHandler = async () => {
     await deliverOrder(orderId);

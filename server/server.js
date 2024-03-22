@@ -93,18 +93,18 @@ app.post("/order/:id", async (req, res) => {
     });
 
     app.post("/payment/success/:tran_id", (req, res) => {
-        console.log('Success');
-        res.send(`Payment successful for Trnx ID: ${req.params.tran_id}`);
+        console.log(`Payment successful for Trnx ID: ${req.params.tran_id}`);
+        res.redirect(`http://localhost:5173/payment/success/${req.params.tran_id}`);
     });
 
     app.post("/payment/fail/:tran_id", (req, res) => {
-        console.log('Failed');
-        res.send(`Payment failed for Trnx ID: ${req.params.tran_id}`);
+        console.log(`Payment failed for Trnx ID: ${req.params.tran_id}`);
+        res.redirect(`http://localhost:5173/payment/fail/${req.params.tran_id}`);
     });
 
     app.post("/payment/cancel/:tran_id", (req, res) => {
-        console.log('Cancelled');
-        res.send(`Payment cancelled for Trnx ID: ${req.params.tran_id}`);
+        console.log(`Payment cancelled for Trnx ID: ${req.params.tran_id}`);
+        res.redirect(`http://localhost:5173/payment/cancel/${req.params.tran_id}`);
     });
 
 });

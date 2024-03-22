@@ -28,6 +28,9 @@ import OrderList from './pages/Admin/OrderList.jsx';
 import Shipping from './pages/Orders/Shipping.jsx';
 import PlaceOrder from './pages/Orders/PlaceOrder.jsx';
 import Order from './pages/Orders/Order.jsx';
+import PaymentSuccess from './pages/Payment/PaymentSuccess.jsx';
+import PaymentFailed from './pages/Payment/PaymentFailed.jsx';
+import PaymentCancel from './pages/Payment/PaymentCancel.jsx';
 
 
 const router = createBrowserRouter(
@@ -49,6 +52,9 @@ const router = createBrowserRouter(
         <Route path="/shipping" element={<Shipping />} />
         <Route path="/placeorder" element={<PlaceOrder />} />
         <Route path="/order/:id" element={<Order />} />
+        <Route path="/payment/success/:tran_id" element={<PaymentSuccess />} />
+        <Route path="/payment/fail/:tran_id" element={<PaymentFailed />} />
+        <Route path="/payment/cancel/:tran_id" element={<PaymentCancel />} />
       </Route>
 
       <Route path="/admin" element={<AdminRoute />} >
